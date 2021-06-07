@@ -1,5 +1,8 @@
 from flask import Flask, request, abort, send_from_directory, make_response
 import os, shutil, tempfile
+import sys
+sys.path.insert(0,'shortbol')
+import shortbol.SBOL2ShortBOL as SB2Short
 
 app = Flask(__name__)
 
@@ -14,6 +17,7 @@ def evaluate():
     
     ########## REPLACE THIS SECTION WITH OWN RUN CODE #################
     #uses rdf types
+    #Check if the SBOL designs will always be collections
     accepted_types = {'Activity', 'Agent', 'Association', 'Attachment', 'Collection',
                       'CombinatorialDerivation', 'Component', 'ComponentDefinition',
                       'Cut', 'Experiment', 'ExperimentalData',
@@ -59,15 +63,12 @@ def run():
     try:
         ########## REPLACE THIS SECTION WITH OWN RUN CODE #################
         #read in test.html
-        file_in_name = os.path.join(cwd, "Test.html")
+        file_in_name = os.path.join(cwd, url)
         with open(file_in_name, 'r') as htmlfile:
             result = htmlfile.read()
-            
-        #put in the url, uri, and instance given by synbiohub
-        result = result.replace("URL_REPLACE", url)
-        result = result.replace("URI_REPLACE", top_level_url)
-        result = result.replace("INSTANCE_REPLACE", instance_url)
-        result = result.replace("REQUEST_REPLACE", str(data))
+
+
+        result = SB2Short.produce_shortbol(result)
         
         
         #write out file to temporary directory
