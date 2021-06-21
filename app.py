@@ -49,13 +49,13 @@ def run():
     temp_dir = tempfile.TemporaryDirectory()
     data = request.get_json(force=True)
 
-    top_level_url = data['top_level']
+    #top_level_url = data['top_level']
     complete_sbol = data['complete_sbol']
-    instance_url = data['instanceUrl']
-    genbank_url = data['genbank']
-    size = data['size']
-    rdf_type = data['type']
-    shallow_sbol = data['shallow_sbol']
+    #instance_url = data['instanceUrl']
+    #genbank_url = data['genbank']
+    #size = data['size']
+    #rdf_type = data['type']
+    #shallow_sbol = data['shallow_sbol']
     
     #url = complete_sbol.replace('/sbol','')
     cwd = os.path.join(cwd, complete_sbol)
@@ -66,6 +66,7 @@ def run():
         #read in test.html
         file_in_name = os.path.join(cwd, "plugintest.sbol")
         #file_in_name = requests.get(url, allow_redirects=True)
+
         #with open('sbolfile', 'wb').write(file_in_name.content):
         with open(file_in_name, 'r') as sbolfile:
             shortbol_library = os.path.join("shortbol", "templates")
