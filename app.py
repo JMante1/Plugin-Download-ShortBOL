@@ -3,7 +3,7 @@ import os, shutil, tempfile
 import sys
 sys.path.insert(0,'shortbol')
 import shortbol.SBOL2ShortBOL as SB2Short
-#import requests
+import requests
 
 app = Flask(__name__)
 
@@ -43,7 +43,7 @@ def evaluate():
 @app.route("/run", methods=["POST"])
 def run():
     #delete if not needed
-    cwd = os.getcwd()
+    #cwd = os.getcwd()
     
     #temporary directory to write intermediate files to
     temp_dir = tempfile.TemporaryDirectory()
@@ -57,18 +57,17 @@ def run():
     #rdf_type = data['type']
     #shallow_sbol = data['shallow_sbol']
     
-    #url = complete_sbol.replace('/sbol','')
-    cwd = os.path.join(cwd, complete_sbol)
+    url = complete_sbol.replace('/sbol','')
+    #cwd = os.path.join(cwd, complete_sbol)
 
     try:
 
         ########## REPLACE THIS SECTION WITH OWN RUN CODE #################
         #read in test.html
-        file_in_name = os.path.join(cwd, "plugintest.sbol")
-        #file_in_name = requests.get(url, allow_redirects=True)
+        #file_in_name = os.path.join(cwd, "plugintest.sbol")
 
         #with open('sbolfile', 'wb').write(file_in_name.content):
-        with open(file_in_name, 'r') as sbolfile:
+        with open(url.content, 'r') as sbolfile:
             shortbol_library = os.path.join("shortbol", "templates")
             result = SB2Short.produce_shortbol(sbolfile.name, shortbol_library)
         
