@@ -42,15 +42,17 @@ def evaluate():
 
 @app.route("/run", methods=["POST"])
 def run():
+    print("---------MADE IT INTO RUN---------")
     #delete if not needed
     #cwd = os.getcwd()
     
     #temporary directory to write intermediate files to
     temp_dir = tempfile.TemporaryDirectory()
     data = request.get_json(force=True)
-
+    print("---------GOT THE DATA---------")
     #top_level_url = data['top_level']
     complete_sbol = data['complete_sbol']
+    print("---------THIS IS THE DATA: " + str(complete_sbol) + "---------")
     #instance_url = data['instanceUrl']
     #genbank_url = data['genbank']
     #size = data['size']
@@ -70,6 +72,7 @@ def run():
         with open(url.content, 'r') as sbolfile:
             shortbol_library = os.path.join("shortbol", "templates")
             result = SB2Short.produce_shortbol(sbolfile.name, shortbol_library)
+        print("---------PERFORMED OPEN FILE---------")
         
         #write out file to temporary directory
         out_name = "Out.html"
