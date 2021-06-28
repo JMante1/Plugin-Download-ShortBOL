@@ -70,20 +70,17 @@ def run():
         with open(sbol_input, "a+") as sbol_file:
             sbol_file.write(run_data.text)
         result = SB2Short.produce_shortbol(sbol_file.name, shortbol_library)
-        os.remove((sbol_input))
+        os.remove(sbol_input)
 
-        #write out file to temporary directory
-        out_name = "Out.html"
-        file_out_name = os.path.join(temp_dir.name, out_name)
+        out_shb = "Out.shb"
+        file_out_name = os.path.join(temp_dir.name, out_shb)
         with open(file_out_name, 'w') as out_file:
             out_file.write(result)
-        #this file could be a zip archive or any path and file name relative to temp_dir
-        download_file_name = out_name
 
         ################## END SECTION ####################################
 
-        return  send_from_directory(temp_dir.name,download_file_name, 
-                                   as_attachment=True, attachment_filename=out_name)
+        return  send_from_directory(temp_dir.name, out_shb,
+                                   as_attachment=True)
 
         
     except Exception as e:
