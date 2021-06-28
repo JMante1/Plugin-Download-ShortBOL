@@ -47,9 +47,6 @@ def evaluate():
 
 @app.route("/run", methods=["POST"])
 def run():
-    #delete if not needed
-    #cwd = os.getcwd()
-    
     #temporary directory to write intermediate files to
     temp_dir = tempfile.TemporaryDirectory()
     data = request.get_json(force=True)
@@ -63,15 +60,10 @@ def run():
     #shallow_sbol = data['shallow_sbol']
     
     url = complete_sbol.replace('/sbol','')
-    #cwd = os.path.join(cwd, complete_sbol)
 
     try:
 
         ########## REPLACE THIS SECTION WITH OWN RUN CODE #################
-        #read in test.html
-        #file_in_name = os.path.join(cwd, "plugintest.sbol")
-
-        #with open(file_in_name, 'r') as sbolfile:
 
         run_data = requests.get(url)# This will be complete_sbol for over flask
         sbol_input = os.path.join(tempdir, "temp_shb.shb")
