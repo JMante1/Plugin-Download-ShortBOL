@@ -65,7 +65,7 @@ def run():
 
         ########## REPLACE THIS SECTION WITH OWN RUN CODE #################
 
-        run_data = requests.get(url)# This will be complete_sbol for over flask
+        run_data = requests.get(complete_sbol)# This will be complete_sbol for over flask
         sbol_input = os.path.join(tempdir, "temp_shb.shb")
         with open(sbol_input, "a+") as sbol_file:
             sbol_file.write(run_data.text)
