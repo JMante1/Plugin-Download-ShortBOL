@@ -5,6 +5,11 @@ sys.path.insert(0,'shortbol')
 import shortbol.SBOL2ShortBOL as SB2Short
 import requests
 
+shortbol_library = os.path.join("shortbol", "templates")
+tempdir = "tempdir"
+if not os.path.isdir(tempdir):
+    os.mkdir(tempdir)
+
 app = Flask(__name__)
 
 @app.route("/status")
@@ -42,17 +47,15 @@ def evaluate():
 
 @app.route("/run", methods=["POST"])
 def run():
-    print("---------MADE IT INTO RUN---------")
     #delete if not needed
     #cwd = os.getcwd()
     
     #temporary directory to write intermediate files to
     temp_dir = tempfile.TemporaryDirectory()
     data = request.get_json(force=True)
-    print("---------GOT THE DATA---------")
+
     #top_level_url = data['top_level']
     complete_sbol = data['complete_sbol']
-    print("---------THIS IS THE DATA: " + str(complete_sbol) + "---------")
     #instance_url = data['instanceUrl']
     #genbank_url = data['genbank']
     #size = data['size']
@@ -68,12 +71,15 @@ def run():
         #read in test.html
         #file_in_name = os.path.join(cwd, "plugintest.sbol")
 
-        #with open('sbolfile', 'wb').write(file_in_name.content):
-        with open(url.content, 'r') as sbolfile:
-            shortbol_library = os.path.join("shortbol", "templates")
-            result = SB2Short.produce_shortbol(sbolfile.name, shortbol_library)
-        print("---------PERFORMED OPEN FILE---------")
-        
+        #with open(file_in_name, 'r') as sbolfile:
+
+        run_data = requests.get(url)# This will be complete_sbol for over flask
+        sbol_input = os.path.join(tempdir, "temp_shb.shb")
+        with open(sbol_input, "a+") as sbol_file:
+            sbol_file.write(run_data.text)
+        result = SB2Short.produce_shortbol(sbol_file.name, shortbol_library)
+        os.remove((sbol_input))
+
         #write out file to temporary directory
         out_name = "Out.html"
         file_out_name = os.path.join(temp_dir.name, out_name)

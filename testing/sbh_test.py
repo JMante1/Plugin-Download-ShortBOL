@@ -2,10 +2,10 @@ import requests
 import urllib
 import requests, zipfile, io
 
-eval_url = "http://127.0.0.1:5000/evaluate"
-run_url = "http://127.0.0.1:5000/run"
+eval_url = "http://127.0.0.1:8080/evaluate"
+run_url = "http://127.0.0.1:8080/run"
 
-data = """{"complete_sbol": "testing", 
+data = """{"complete_sbol": "http://localhost:5000/public/plugintest.sbol", 
             "shallow_sbol": "", 
             "genbank": "", 
             "top_level": "", 
