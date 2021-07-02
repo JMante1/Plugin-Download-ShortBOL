@@ -71,7 +71,7 @@ def run():
 
         ################## END SECTION ####################################
 
-        return  send_from_directory(temp_dir.name, out_shb,
+        return  send_from_directory(temp_dir.name, out_shb, attachment_filename = "test.shb",
                                    as_attachment=True)
 
         
