@@ -18,6 +18,8 @@ def test():
     run_response = requests.post(run_url, data=data)
     print(eval_response.text)
     print(run_response.text)
+    print(run_response.headers)
+    print(run_response.status_code)
     #z = zipfile.ZipFile(io.BytesIO(run_response.content))
     #z.extractall("out")
 

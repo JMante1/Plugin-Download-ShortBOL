@@ -6,9 +6,6 @@ import shortbol.SBOL2ShortBOL as SB2Short
 import requests
 
 shortbol_library = os.path.join("shortbol", "templates")
-tempdir = "tempdir"
-if not os.path.isdir(tempdir):
-    os.mkdir(tempdir)
 
 app = Flask(__name__)
 
@@ -58,21 +55,21 @@ def run():
         ########## REPLACE THIS SECTION WITH OWN RUN CODE #################
 
         run_data = requests.get(complete_sbol)
-        sbol_input = os.path.join(tempdir, "temp_shb.shb")
-        with open(sbol_input, "a+") as sbol_file:
+        sbol_input = os.path.join(temp_dir.name, "temp_shb.shb")
+        print(temp_dir.name)
+        with open(sbol_input, "w+") as sbol_file:
             sbol_file.write(run_data.text)
         result = SB2Short.produce_shortbol(sbol_file.name, shortbol_library)
-        os.remove(sbol_input)
 
         out_shb = "Out.shb"
         file_out_name = os.path.join(temp_dir.name, out_shb)
-        with open(file_out_name, 'w') as out_file:
+        with open(file_out_name, 'w+') as out_file:
             out_file.write(result)
 
         ################## END SECTION ####################################
 
-        return  send_from_directory(temp_dir.name, out_shb, attachment_filename = "test.shb",
-                                   as_attachment=True)
+        return  send_from_directory(temp_dir.name, out_shb, attachment_filename="test.shb",
+                                   mimetype="text/plain", as_attachment=True)
 
         
     except Exception as e:
