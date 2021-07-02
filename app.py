@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 @app.route("/status")
 def status():
-    return("The Download Test Plugin Flask Server is up and running")
+    return("The Download ShortBOL Plugin Flask Server is up and running")
 
 @app.route("/evaluate", methods=["POST"])
 def evaluate():
@@ -51,21 +51,13 @@ def run():
     temp_dir = tempfile.TemporaryDirectory()
     data = request.get_json(force=True)
 
-    #top_level_url = data['top_level']
     complete_sbol = data['complete_sbol']
-    #instance_url = data['instanceUrl']
-    #genbank_url = data['genbank']
-    #size = data['size']
-    #rdf_type = data['type']
-    #shallow_sbol = data['shallow_sbol']
-    
-    url = complete_sbol.replace('/sbol','')
 
     try:
 
         ########## REPLACE THIS SECTION WITH OWN RUN CODE #################
 
-        run_data = requests.get(complete_sbol)# This will be complete_sbol for over flask
+        run_data = requests.get(complete_sbol)
         sbol_input = os.path.join(tempdir, "temp_shb.shb")
         with open(sbol_input, "a+") as sbol_file:
             sbol_file.write(run_data.text)
