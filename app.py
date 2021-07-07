@@ -55,21 +55,29 @@ def run():
         ########## REPLACE THIS SECTION WITH OWN RUN CODE #################
 
         run_data = requests.get(complete_sbol)
-        sbol_input = os.path.join(temp_dir.name, "temp_shb.shb")
-        print(temp_dir.name)
+        sbol_input = os.path.join(temp_dir.name, "temp_shb.txt")
         with open(sbol_input, "w+") as sbol_file:
             sbol_file.write(run_data.text)
         result = SB2Short.produce_shortbol(sbol_file.name, shortbol_library)
 
-        out_shb = "Out.shb"
+        #print("***************************************************")
+        #print(result)
+
+        out_shb = "Out.txt"
         file_out_name = os.path.join(temp_dir.name, out_shb)
         with open(file_out_name, 'w+') as out_file:
             out_file.write(result)
 
+
+        #print("--------------------------------------------------")
+        #f = open(file_out_name, 'r')
+        #file_contents = f.read()
+        #print(file_contents)
+        #f.close()
+
         ################## END SECTION ####################################
 
-        return  send_from_directory(temp_dir.name, out_shb, attachment_filename="test.shb",
-                                   mimetype="text/plain", as_attachment=True)
+        return  send_from_directory(temp_dir.name, out_shb, attachment_filename="test.txt", as_attachment=True)
 
         
     except Exception as e:

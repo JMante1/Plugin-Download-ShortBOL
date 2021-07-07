@@ -1,3 +1,5 @@
+import os
+
 import requests
 import urllib
 import requests, zipfile, io
@@ -14,14 +16,21 @@ data = """{"complete_sbol": "http://localhost:5000/public/plugintest.sbol",
             "instanceUrl": ""}"""
 
 def test():
+    save_path = 'out'
+    file_name = "test.txt"
+
+    completeName = os.path.join(save_path, file_name)
+
     eval_response = requests.post(eval_url, data=data)
     run_response = requests.post(run_url, data=data)
     print(eval_response.text)
     print(run_response.text)
     print(run_response.headers)
     print(run_response.status_code)
-    #z = zipfile.ZipFile(io.BytesIO(run_response.content))
-    #z.extractall("out")
+
+    file1 = open(completeName, "w")
+    file1.write(run_response.text)
+    file1.close()
 
 
 if __name__ == "__main__": test()
