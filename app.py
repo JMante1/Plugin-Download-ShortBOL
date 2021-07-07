@@ -56,7 +56,7 @@ def run():
 
         run_data = requests.get(complete_sbol)
         sbol_input = os.path.join(temp_dir.name, "temp_shb.txt")
-        with open(sbol_input, "w+") as sbol_file:
+        with open(sbol_input, "w") as sbol_file:
             sbol_file.write(run_data.text)
             result = SB2Short.produce_shortbol(sbol_file.name, shortbol_library)
 
@@ -65,7 +65,7 @@ def run():
 
         out_shb = "Out.txt"
         file_out_name = os.path.join(temp_dir.name, out_shb)
-        with open(file_out_name, 'w+') as out_file:
+        with open(file_out_name, 'w') as out_file:
             out_file.write(result)
 
 
