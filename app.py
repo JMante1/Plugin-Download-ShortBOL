@@ -50,9 +50,7 @@ def run():
     temp_dir = tempfile.TemporaryDirectory()
     data = request.get_json(force=True)
 
-    top_level_url = data['top_level']
     complete_sbol = data['complete_sbol']
-    instance_url = data['instanceUrl']
 
     #url = complete_sbol.replace('/sbol', '')
 
